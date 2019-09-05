@@ -1,1 +1,0 @@
-jedsadakarn.github.io
