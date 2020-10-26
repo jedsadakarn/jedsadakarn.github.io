@@ -1,1 +1,155 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><link href=/bower_components/aos/dist/aos.css><link rel=stylesheet href=https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css><link href=https://use.fontawesome.com/releases/v5.0.13/css/all.css rel=stylesheet><title>JedsadakarnK</title><link href=/js/about.7c0b83ff.js rel=prefetch><link href=/css/app.952c91ff.css rel=preload as=style><link href=/css/chunk-vendors.523bdc7b.css rel=preload as=style><link href=/js/app.13f0b24a.js rel=preload as=script><link href=/js/chunk-vendors.d65e2e68.js rel=preload as=script><link href=/css/chunk-vendors.523bdc7b.css rel=stylesheet><link href=/css/app.952c91ff.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=/img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/icons/favicon-16x16.png><link rel=manifest href=/manifest.json><meta name=theme-color content=#4DBA87><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=portfolio><link rel=apple-touch-icon href=/img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=/img/icons/safari-pinned-tab.svg color=#4DBA87><meta name=msapplication-TileImage content=/img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#000000></head><body><script src=/__/firebase/6.4.2/firebase-app.js></script><script src=/__/firebase/init.js></script><script src=https://unpkg.com/aos@2.3.1/dist/aos.js></script><noscript><strong>We're sorry but portfolio doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/js/chunk-vendors.d65e2e68.js></script><script src=/js/app.13f0b24a.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    </script>
+    <script src="./canvas_clock.js">
+    </script>
+    <script>
+        $(document).ready(function () {
+            change_background();
+            change_Datetime();
+
+            var time = new Date(),
+                minutesRemaining = (60 - time.getMinutes()) * 60 * 1000;
+
+            setTimeout(function () {
+                change_background();
+                setInterval(change_background, 60 * 60 * 1000);
+            }, minutesRemaining);
+
+            secondsRemaining = (60 - time.getSeconds()) * 1000;
+
+            setTimeout(function () {
+                change_Datetime();
+                setInterval(change_Datetime, 60 * 1000);
+            }, secondsRemaining);
+
+            function change_background() {
+                var dt = new Date();
+                var n = dt.getHours();
+                console.log('feelog', n);
+                var body = $('body');
+
+                if ((n >= 6 && n < 18)) { // 6 - 17
+
+                    var parent_width = $("#horizollineDiv").width();
+                    var width_per_h = parent_width / 11;
+                    console.log("fee W", parent_width)
+                    console.log("fee W per H", width_per_h)
+
+                    $(".sun-img").css("left", ((width_per_h * (n - 6)) - (width_per_h / 2)) + "px");
+
+                    $("body").css("background-color", "#eff0f2");
+                    $(".date-disp").css("color", "#282828");
+                    $(".time-disp").css("color", "#282828");
+                    $("#hr-line").css("border", "1px solid #282828");
+                    $("#iconImg").attr("src", "./images/sun.png");
+
+                } else { // 18 - 5
+
+                    var parent_width = $("#horizollineDiv").width();
+                    var width_per_h = parent_width / 11;
+                    console.log("fee W per H", width_per_h)
+
+                    if (n <= 5) { // 0 - 5
+                        $(".sun-img").css("left", ((width_per_h * (n + 6)) - (width_per_h / 2)) + "px");
+                    } else { // 18 - 23
+                        $(".sun-img").css("left", ((width_per_h * (n - 18)) - (width_per_h / 2)) + "px");
+                    }
+
+                    $("body").css("background-color", "#282828");
+                    $(".date-disp").css("color", "#eff0f2");
+                    $(".time-disp").css("color", "#eff0f2");
+                    $("#hr-line").css("border", "1px solid #eff0f2");
+                    $("#iconImg").attr("src", "../images/moon.png");
+                }
+
+
+            }
+
+            function change_Datetime() {
+                var dt = new Date();
+                $(".date-disp").text(("0" + dt.getDate()).slice(-2) + "/" + ("0" + (dt.getMonth() + 1)).slice(-
+                    2) + "/" + dt.getFullYear())
+                $(".time-disp").text(("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2))
+
+                var n = dt.getHours();
+            }
+
+            clockd2_ = {
+                "indicate": true,
+                "dial1_color": "#282828",
+                "time_24h": true,
+                "timeoffset": 0,
+                "date_add": 1,
+                "date_add_color": "#282828",
+                "bg_color": "#eff0f2"
+            };
+            var c = document.getElementById('clock2_');
+            cns2_ = c.getContext('2d');
+
+            //clock_digital(200, cns2_, clockd2_);
+
+        });
+    </script>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        .time-disp,
+        .date-disp {
+            color: cornsilk;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sun-img {
+            position: absolute;
+            top: -33px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row align-items-center" style="height: 100%;">
+            <div id="horizollineDiv" class="col align-self-center" style="width: 100%; display: block;">
+                <div class="row-12" style="width: 100%;">
+                    <img id="iconImg" class="sun-img" src="./images/sun.png" alt="Girl in a jacket" width="100" height="100">
+                </div>
+                <div class="row-12" style="width: 100%;">
+                    <hr id="hr-line">
+                </div>
+                <div class="row-12" style="margin: 100px 0 auto; display: block;">
+                    <p class="date-disp" style="text-align:center; font-family:'Lucida Console', Courier, monospace;">
+                    </p>
+                    <p class="time-disp" style="text-align:center; font-family:'Lucida Console', Courier, monospace;">
+                    </p>
+                </div>
+                <!-- <div class="row-12" style="margin:0 auto; display: block;">
+                    <canvas id="clock2_" width="200px" height="200px">
+                    </canvas>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
